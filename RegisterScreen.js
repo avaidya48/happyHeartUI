@@ -28,7 +28,7 @@ const RegisterScreen = ({ navigation }) => {
     };
     try {
         await fetch(
-            'http://10.180.246.148:8080/register/', requestOptions)
+            'http://happy-heart2.herokuapp.com/register/', requestOptions)
             .then(response => response.text())
             .then(function(text){
                 console.log(text);
@@ -44,12 +44,15 @@ const RegisterScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Register</Text>
+
+      <Text>Email</Text>
       <TextInput
         style={styles.input}
-        placeholder="Username"
+        placeholder="Email"
         onChangeText={(text) => setUsername(text)}
         value={username}
       />
+      <Text>Password</Text>
       <TextInput
         style={styles.input}
         placeholder="Password"
@@ -57,6 +60,7 @@ const RegisterScreen = ({ navigation }) => {
         value={password}
         secureTextEntry={true}
       />
+      <Text>First Name</Text>
       <TextInput
         style={styles.input}
         placeholder="First Name"
@@ -64,6 +68,7 @@ const RegisterScreen = ({ navigation }) => {
         value={firstname}
         secureTextEntry={false}
       />
+      <Text>Last Name</Text>
       <TextInput
         style={styles.input}
         placeholder="Last Name"
@@ -71,6 +76,7 @@ const RegisterScreen = ({ navigation }) => {
         value={lastname}
         secureTextEntry={false}
       />
+      <Text>Gender</Text>
       <TextInput
         style={styles.input}
         placeholder="Gender"
@@ -78,6 +84,7 @@ const RegisterScreen = ({ navigation }) => {
         value={gender}
         secureTextEntry={false}
       />
+      <Text>Birthdate</Text>
       <TextInput
         style={styles.input}
         placeholder="Birthdate"

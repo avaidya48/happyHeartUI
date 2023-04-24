@@ -17,11 +17,17 @@ const LoginScreen = ({ navigation }) => {
     };
     try {
         await fetch(
-            'http://10.180.246.148:8080/login/', requestOptions)
+            'http://happy-heart2.herokuapp.com/login/', requestOptions)
             .then(response => response.text())
             .then(function(text){
                 console.log(text);
-                navigation.navigate('MedicalForm');
+                if(text=="Login Successful"){
+                  navigation.navigate('HomeScreen', {
+                    username: username
+                  });
+                }else{
+                  console.warn(text);
+                }
             })
     }
     catch (error) {

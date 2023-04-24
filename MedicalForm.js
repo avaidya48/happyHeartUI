@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
+import moment from 'moment';
 
 
-const MedicalForm = ({navigation}) => {
+const MedicalForm = ({ route, navigation }) => {
+  const { username } = route.params;
   const [diastolicPressure, setDiastolicPressure] = useState('');
   const [systolicPressure, setSystolicPressure] = useState('');
   const [weight, setWeight] = useState('');
-  const [date, setDate] = useState('');
   const [heartRate, setHeartRate] = useState('');
 
   const handlePress = async() => {
     // Perform login logic here
+
+    const date = moment.now();
+    const formattedDate = moment(date).format('DD-MM-yyyy');
+
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -20,17 +25,19 @@ const MedicalForm = ({navigation}) => {
             "systolic_pressure" : systolicPressure, 
             "weight" : weight, 
             "heart_rate" : heartRate, 
-            "date" : date, 
-            "email" : "test" 
+            "date" : formattedDate, 
+            "email" : username
         })
     };
     try {
         await fetch(
-            'http://10.180.246.148:8080/createMedicalDetails/', requestOptions)
+            'http://happy-heart2.herokuapp.com/createMedicalDetails/', requestOptions)
             .then(response => response.text())
             .then(function(text){
                 console.log(text);
-                navigation.navigate('LoginScreen');
+                navigation.navigate('HomeScreen', {
+                  username: username
+                });
             })
     }
     catch (error) {
@@ -42,42 +49,43 @@ const MedicalForm = ({navigation}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Enter Data</Text>
+      <Text>Enter diastolic pressure:</Text>
       <TextInput
         style={styles.input}
         placeholder="Enter diastolic pressure"
+        keyboardType='numeric'
         onChangeText={setDiastolicPressure}
         value={diastolicPressure}
       />
-
+      
+      <Text>Enter systolic pressure:</Text>
       <TextInput
         style={styles.input}
         placeholder="Enter systolic pressure"
+        keyboardType='numeric'
         onChangeText={setSystolicPressure}
         value={systolicPressure}
       />
 
-      
-      <TextInput
-        style={styles.input}
-        placeholder="Enter weight"
-        onChangeText={setWeight}
-        value={weight}
-      />
 
-      
+      <Text>Enter heart rate:</Text>
       <TextInput
         style={styles.input}
         placeholder="Enter heart rate"
+        keyboardType='numeric'
         onChangeText={setHeartRate}
         value={heartRate}
       />
 
+      <Text>Enter weight:</Text>
       <TextInput
         style={styles.input}
-        placeholder="Enter date"
-        onChangeText={setDate}
-        value={date}
+        placeholder="Enter weight"
+        keyboardType='numeric'
+        onChangeText={setWeight}
+        value={weight}
       />
+
       
       <TouchableOpacity style={styles.button} onPress={handlePress}>
         <Text style={styles.buttonText}>Submit</Text>
@@ -101,7 +109,7 @@ const styles = StyleSheet.create({
     color: "#fe2c54"
   },
   input: {
-    height: 40,
+    height: 30,
     width: '80%',
     borderColor: 'gray',
     borderWidth: 1,

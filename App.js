@@ -8,6 +8,9 @@ import MedicalForm from './MedicalForm';
 import RegisterScreen from './RegisterScreen';
 import LandingScreen from './LandingScreen';
 import HomeScreen from './HomeScreen';
+import VisScreen from './Visualization';
+import AppointmentScreen from './AppointmentScreen';
+import MedicalRecords from './MedicalRecords';
 
 
 const Stack = createNativeStackNavigator();
@@ -23,6 +26,9 @@ export default function App() {
         <Stack.Screen name="MedicalForm" component={MedicalForm} />
         <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
+        <Stack.Screen name="VisScreen" component={VisScreen} />
+        <Stack.Screen name="AppointmentScreen" component={AppointmentScreen} />
+        <Stack.Screen name="MedicalRecords" component={MedicalRecords} />
       </Stack.Navigator>
     </NavigationContainer>
     </View>
@@ -33,6 +39,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
 });

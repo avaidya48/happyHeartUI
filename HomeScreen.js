@@ -1,54 +1,109 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 
 
-const HomeScreen = ({ navigation }) => {
-
-
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>HomePage</Text>
-    </View>
-  );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+const styles = {
+    app: {
+    marginHorizontal: "auto",
     width: "100%",
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  title: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-    color: "#fe2c54"
-  },
-  input: {
-    height: 40,
-    width: '80%',
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginTop: 8,
-    paddingHorizontal: 10,
+    padding: "40%",
+    paddingBottom: "40%",
+    paddingLeft: "5%",
+    paddingRight: "5%"
   },
   button: {
-    backgroundColor: '#fe2c54',
-    borderRadius: 4,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#e91e63',
     paddingVertical: 12,
     paddingHorizontal: 16,
-    marginTop: 20,
+    borderRadius: 4,
+    height: "100%",
+    width: "100%"
+    
   },
-  buttonText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: 'bold',
-    textAlign: 'center',
+  image: {
+    width: "100%",
+    height: "100%",
   },
-});
+  row: {
+    flexDirection: "row",
+    height: "40%"
+  },
+  "col":  {
+    backgroundColor:  "lightblue",
+    borderColor:  "#fff",
+    borderWidth:  10,
+    flex:  1,
+    alignItems: "Center"
+  },
+};
 
-export default HomeScreen;
+const Col = ({ numRows, children }) => {
+    return  (
+      <View style={styles[`col`]}>{children}</View>
+    )
+  }
+
+const Row = ({ children }) => (
+    <View style={styles.row}>{children}</View>
+  )
+
+
+  const ImageButton = ({navigation, onPress, source}) => (
+    <TouchableOpacity style={styles.button} onPress={onPress}>
+      <Image style={styles.image} source={source} />
+    </TouchableOpacity>
+  );
+
+
+  const HomeScreen = ({route, navigation }) =>
+  {
+    const { username } = route.params;
+
+    const onAppintment = () =>{
+      navigation.navigate('AppointmentScreen', {
+        username: username
+      });
+    }
+
+    const onMedicalForm = () =>{
+      navigation.navigate('MedicalForm', {
+        username: username
+      });
+    }
+  
+    const onVisScreen = () =>{
+      navigation.navigate('VisScreen', {
+        username: username
+      });
+    }
+
+    const onMedicalRecords = () =>{
+      navigation.navigate('MedicalRecords', {
+        username: username
+      });
+    }
+
+    return (
+        <View style={styles.app}>
+        <Row>
+          <Col numRows={1}>
+          <ImageButton source={require('./Images/appointment_ico.png')} onPress={onAppintment}></ImageButton>
+          </Col>
+          <Col numRows={1}>
+          <ImageButton source={require('./Images/medicaldetails_ico.png')} onPress={onMedicalForm}></ImageButton>
+          </Col>
+        </Row>
+        <Row>
+          <Col numRows={1}>
+          <ImageButton source={require('./Images/visualization_ico.png')} onPress={onVisScreen}></ImageButton>
+          </Col>
+          <Col numRows={1}>
+          <ImageButton source={require('./Images/list.png')} onPress={onMedicalRecords}></ImageButton>
+          </Col>
+        </Row>
+      </View>
+    )
+  }
+
+  export default HomeScreen
